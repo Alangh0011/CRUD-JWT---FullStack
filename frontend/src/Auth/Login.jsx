@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { FcGoogle } from "react-icons/fc";
-import { FaFacebook } from "react-icons/fa";
-import { FaGithub } from "react-icons/fa";
+//import { FcGoogle } from "react-icons/fc";
+//import { FaFacebook } from "react-icons/fa";
+//import { FaGithub } from "react-icons/fa";
 import Hero from './Hero'
 import { Link } from 'react-router-dom';
 import Modal from './Modal';
@@ -9,10 +9,10 @@ import axios from 'axios';
 import { useHistory } from 'react-router-dom';
 
 
-function Login() {
+function Login({setIsLoggedIn}) {
     
     const history = useHistory();
-
+    
     // Estados para controlar el modal y su contenido
     const [modalOpen, setModalOpen] = useState(false);
     const [modalMessage, setModalMessage] = useState('');
@@ -33,31 +33,22 @@ function Login() {
     // Función para manejar el envío del formulario
     const handleSubmit = async (e) => {
         e.preventDefault();
-        // Validar campos obligatorios
         if (formData.nombreUsuario === "" || formData.password === "") {
-        setModalMessage('Por favor complete todos los campos.');
-        setModalError(true);
-        setModalOpen(true);
-        return; // Evitar que se envíe el formulario si hay campos vacíos
+            setModalMessage('Por favor complete todos los campos.');
+            setModalError(true);
+            setModalOpen(true);
+            return;
         }
         try {
             const response = await axios.post('http://localhost:8080/auth/login', formData);
-            console.log(response.data);
-            history.push('/home'); // Reemplaza '/home' con la ruta de tu página de inicio
+            const { token } = response.data;
+            // Almacena el token JWT de forma segura (por ejemplo, en localStorage)
+            localStorage.setItem('token', token);
+            setIsLoggedIn(true); // Actualizar el estado de autenticación
+            history.push('/home');
         } catch (error) {
             console.error('Error:', error);
-            if (error.response) {
-                console.log(error.response.data);
-                setModalMessage(error.response.data.message);
-            } else if (error.request) {
-                console.log(error.request);
-                setModalMessage('No se recibió respuesta del servidor');
-            } else {
-                console.log('Error', error.message);
-                setModalMessage('Ocurrió un error inesperado');
-            }
-            setModalError(true);
-            setModalOpen(true);
+            // Manejo de errores
         }
     };
 
@@ -114,6 +105,7 @@ function Login() {
                 onClick={handleSubmit}
                 className="active:scale-[.98] active:duration-80 transition-all py-2 rounded-xl bg-green-500 text-white text-lg font-bold hover:scale-[1.1] ease-in-out">Sign in</button>
             </div>
+            {/* 
             <div className="mt-8 flex mx-auto space-x-10 justify-center">
                 <button className="border-2 border-gray-100 rounded-md px-4 py-2 mt-2 active:scale-[1.1] active:duration-80 transition-all hover:scale-[1.2] ease-in-out">
                     <FcGoogle className="text-4xl "/>
@@ -125,6 +117,7 @@ function Login() {
                     <FaGithub className="text-4xl"/>
                 </button>
             </div>
+            */}
               {/* Componente Modal para mostrar mensajes */}
             <Modal 
             isOpen={modalOpen} 
