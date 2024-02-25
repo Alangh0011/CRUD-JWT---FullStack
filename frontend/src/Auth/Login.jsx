@@ -41,9 +41,10 @@ function Login({setIsLoggedIn}) {
         }
         try {
             const response = await axios.post('http://localhost:8080/auth/login', formData);
-            const { token } = response.data;
+            const { token, authorities } = response.data; // Desestructurar el token y las autoridades
             // Almacena el token JWT de forma segura (por ejemplo, en localStorage)
             localStorage.setItem('token', token);
+            localStorage.setItem('authorities', JSON.stringify(authorities)); // Convertir las autoridades a JSON
             setIsLoggedIn(true); // Actualizar el estado de autenticación
             history.push('/home');
         } catch (error) {
@@ -51,6 +52,7 @@ function Login({setIsLoggedIn}) {
             // Manejo de errores
         }
     };
+    
 
     return (
         <div className="flex w-full h-screen">
