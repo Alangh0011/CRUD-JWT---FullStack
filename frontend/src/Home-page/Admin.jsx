@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
+
 
 const Admin = () => {
     const [productos, setProductos] = useState([]);
@@ -55,7 +57,7 @@ const Admin = () => {
     const eliminarProducto = async (id) => {
         try {
             const token = localStorage.getItem('token');
-            await axios.delete(`http://localhost:8080/producto/${id}`, {
+            await axios.delete(`http://localhost:8080/producto/delete/${id}`, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
@@ -72,7 +74,18 @@ const Admin = () => {
     return (
         <div className="p-4">
             <h1 className="text-2xl font-bold mb-4">Lista de Productos</h1>
-        
+            <div className="mt-8 flex flex-col gap-y-4">
+                
+                    <button 
+                        onClick={() => buscarProductoPorNombre()}
+                        className="active:scale-[.98] active:duration-80 transition-all py-2 rounded-xl bg-green-500 text-white text-lg font-bold hover:scale-[1.1] ease-in-out"
+                    >
+                        <Link 
+                        className="active:scale-[.98] active:duration-80 transition-all py-2 rounded-xl bg-green-500 text-white text-lg font-bold hover:scale-[1.1] ease-in-out" 
+                        to={`/agregar`}>Agregar producto</Link>
+                    </button>
+                    
+        </div>
         <div className="mt-8 flex flex-col gap-y-4">
                 <div className="flex items-center justify-between">
                 <label className="text-lg font-medium mr-3">Buscar por nombre</label>
@@ -132,7 +145,8 @@ const Admin = () => {
                             <td className="border px-4 py-2">{producto.nombre}</td>
                             <td className="border px-4 py-2">${producto.precio}</td>
                             <td className="border px-4 py-2">
-                                <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Editar</button></td>
+                            <Link className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded' to={`/actualizar/${producto.id}`}>Actualizar</Link>
+                            </td>
                             <td className="border px-4 py-2">
                             <button onClick={() => eliminarProducto(producto.id)} className="bg-red-500 hover:bg-red-700 text-white     font-bold py-2 px-4 rounded">Eliminar</button>
                             </td>

@@ -69,7 +69,7 @@ function Register() {
 
     return (
     <div className="flex w-full h-screen">
-      <div className="w-full flex items-center justify-center lg:w-1/2 bg-gray-200">
+        <div className="w-full flex items-center justify-center lg:w-1/2 bg-gray-200">
         <div className="bg-white px-10 py-20 rounded-3xl border-2 border-gray-100 shadow bg-opacity-50">
             <h1 className="text-5xl font-semibold">WELCOME</h1>
             <p className="font-medium text-lg text-gray-500 mt-4">Welcome back! Please enter your details</p>
