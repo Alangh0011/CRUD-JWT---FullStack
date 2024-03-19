@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import ProductPDFGenerator from '../Components/ProductPDFGenerator';
 
 
 const Admin = () => {
@@ -74,6 +75,7 @@ const Admin = () => {
     return (
         <div className="p-4">
             <h1 className="text-2xl font-bold mb-4">Lista de Productos</h1>
+            <ProductPDFGenerator productos={productos} />
             <div className="mt-8 flex flex-col gap-y-4">
                 
                     <button 

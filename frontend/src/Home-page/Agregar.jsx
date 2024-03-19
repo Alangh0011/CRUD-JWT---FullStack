@@ -100,7 +100,7 @@ const Agregar = () => {
                     value={formData.precio}
                     onChange={handleChange}
                     name='precio'
-                    type='number'
+                    type='double'
                     />
                 </div>
             </div>
