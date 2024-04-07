@@ -33,9 +33,14 @@ public class JwtProvider {
      */
     public String generateToken(Authentication authentication){
         UsuarioPrincipal usuarioPrincipal = (UsuarioPrincipal) authentication.getPrincipal();
-        return Jwts.builder().setSubject(usuarioPrincipal.getUsername())
-                .setIssuedAt(new Date())
-                .setExpiration(new Date(new Date().getTime() + expiration * 1000))
+        Date now = new Date();
+        Date expiryDate = new Date(now.getTime() + expiration * 1000);
+
+        return Jwts.builder()
+                .setSubject(usuarioPrincipal.getUsername())
+                .claim("roles", usuarioPrincipal.getAuthorities()) // Agregar los roles como una lista de autoridades
+                .setIssuedAt(now)
+                .setExpiration(expiryDate)
                 .signWith(SignatureAlgorithm.HS512, secret)
                 .compact();
     }
