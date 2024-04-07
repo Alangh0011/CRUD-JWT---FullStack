@@ -2,14 +2,17 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
 const UserView = () => {
+    // Estados para almacenar la lista de productos, el nombre y el ID del producto a buscar
     const [productos, setProductos] = useState([]);
     const [nombre, setNombre] = useState('');
     const [id, setId] = useState('');
 
     useEffect(() => {
+        // Llama a la función para cargar la lista de productos cuando el componente se monta
         fetchProductos();
     }, []);
 
+    // Función para obtener la lista de productos desde el backend
     const fetchProductos = async () => {
         try {
         const token = localStorage.getItem('token'); // Obtener el token del almacenamiento local
@@ -18,13 +21,13 @@ const UserView = () => {
             Authorization: `Bearer ${token}`, // Agregar el token a la cabecera Authorization
             },
         });
-        setProductos(response.data);
+        setProductos(response.data); // Actualizar el estado con la lista de productos obtenida
         } catch (error) {
         console.error('Error al obtener la lista de productos:', error);
         }
     };
     
-
+    // Función para buscar un producto por nombre
     const buscarProductoPorNombre = async () => {
         try {
             const token = localStorage.getItem('token');
@@ -33,11 +36,12 @@ const UserView = () => {
                     Authorization: `Bearer ${token}`,
                 },
             });
-            setProductos([response.data]);
+            setProductos([response.data]);// Actualizar el estado con el producto encontrado
         } catch (error) {
             console.error('Error al obtener el producto por nombre:', error);
         }
     };
+    // Función para buscar un producto por ID
     const buscarProductoPorId = async () => {
         try {
             const token = localStorage.getItem('token');
@@ -46,7 +50,7 @@ const UserView = () => {
                     Authorization: `Bearer ${token}`,
                 },
             });
-            setProductos([response.data]);
+            setProductos([response.data]);// Actualizar el estado con el producto encontrado
         } catch (error) {
             console.error('Error al obtener el producto por nombre:', error);
         }
@@ -58,6 +62,7 @@ const UserView = () => {
         <div className="p-4">
             <h1 className="text-2xl font-bold mb-4">Lista de Productos</h1>
         
+        {/* Formulario para buscar productos por nombre */}
         <div className="mt-8 flex flex-col gap-y-4">
                 <div className="flex items-center justify-between">
                 <label className="text-lg font-medium mr-3">Buscar por nombre</label>
@@ -78,7 +83,8 @@ const UserView = () => {
                 </div>
             </div>
         </div>
-
+        
+         {/* Formulario para buscar productos por ID */}
         <div className="mt-8 flex flex-col gap-y-4">
                 <div className="flex items-center justify-between">
                 <label className="text-lg font-medium mr-3">Buscar por id</label>
@@ -99,7 +105,7 @@ const UserView = () => {
                 </div>
             </div>
         </div>
-
+            {/* Tabla para mostrar la lista de productos */}
             <table className="table-auto">
                 <thead>
                     <tr>

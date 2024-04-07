@@ -5,6 +5,7 @@ import Admin from './Admin';
 import { jwtDecode } from "jwt-decode";
 
 const Home = () => {
+    // Estado para almacenar los roles del usuario
     const [userRoles, setUserRoles] = useState([]);
 
     useEffect(() => {
@@ -23,9 +24,10 @@ const Home = () => {
 
                     // Actualizar el estado con los roles del usuario
                     setUserRoles(roles);
-                    console.log('Roles:', roles); // Agrega esta línea
+                    console.log('Roles:', roles); // Agrega esta línea para depurar los roles del usuario
                 }
             } catch (error) {
+                // Manejo de errores al decodificar el token
                 console.error('Error al decodificar el token', error);
                 console.log('Token:', token); // Agrega esta línea para ver el token en caso de error
             }
